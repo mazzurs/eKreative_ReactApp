@@ -3,20 +3,21 @@ import { bindActionCreators } from 'redux'
 import { changeStateProp } from '../actions'
 import App from './App'
 
-const mapStateToProps = ({main: {value}}, ownProps) => {
+const mapStateToProps = ({main: {userToken}}, ownProps) => {
   return {
-    value,
+    userToken,
     ...ownProps
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    // bind actions with dispatch
+
     ...bindActionCreators({changeStateProp}, dispatch),
-    // example that we can add our custom funcs to props
-    myCustomPropsFunc: function (prop, value, reducer) {
-      // call of action in custom func
+
+    changeStateProp: function (prop, value, reducer) {
+      console.log(prop, value, reducer)
+
       changeStateProp(prop, value, reducer)(dispatch)
       return null
     }

@@ -5,6 +5,10 @@ import './App.css'
 // components
 import ComponentAContainer from '../components/ComponentsA/ComponentAContainer'
 import ComponentBContainer from '../components/ComponentsB/ComponentBContainer'
+import LoginContainer from '../components/Login/LoginContainer'
+import LogOutContainer from '../components/Logout/LogoutContainer'
+import MapContainer from '../components/Map/MapContainer'
+
 // router
 import { Route, Switch } from 'react-router'
 import { HashRouter, Link } from 'react-router-dom'
@@ -27,10 +31,9 @@ class App extends Component {
 
     this.checkLoginState = this.checkLoginState.bind(this)
     this.testAPI = this.testAPI.bind(this)
-    this.initMap = this.initMap.bind(this)
   }
 
-  componentDidMount () {
+  componentWillMount () {
     window.fbAsyncInit = function () {
       FB.init({
         appId: '385192911908319',
@@ -68,7 +71,10 @@ class App extends Component {
     console.log(response)
     if (response.status === 'connected') {
       this.testAPI()
-      this.initMap()
+      console.log(this.props)
+      this.props.changeStateProp('mapState', true, 'MAIN')
+    } else {
+      this.props.changeStateProp('mapState', false, 'MAIN')
     }
   }
 
@@ -78,31 +84,19 @@ class App extends Component {
     }.bind(this))
   }
 
-  handleClick () {
-    FB.login(this.checkLoginState())
-  }
-
-  initMap () {
-    let element = document.getElementById('map')
-    let options = {
-      zoom: 14,
-      center: {lat: 49.444185, lng: 32.059224}
-    }
-    let myMap = new google.maps.Map(element, options)
-  }
-
   render () {
+    console.log(this.props)
     return (
       <HashRouter>
         <div className='App'>
           <div className='App-header'>
-            <div id="status"></div>
-            <div className="fb-login-button" data-max-rows="1" data-size="small" data-button-type="login_with"
-                 data-show-faces="false" data-auto-logout-link="true" data-use-continue-as="false"></div>
+            <div id="fb-root"></div>
+            <LoginContainer />
+            <LogOutContainer />
           </div>
 
           <div>
-            <div className="map" id="map"></div>
+            <MapContainer />
             <ul>
               <li><Link to={`/`}>AppContainer (Home)</Link></li>
               <li><Link to={`/componentA`}>ComponentAContainer</Link>
