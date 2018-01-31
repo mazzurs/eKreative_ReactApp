@@ -90,7 +90,7 @@ class App extends Component {
       <HashRouter>
         <div className='App'>
           <div className='App-header'>
-            <div id="fb-root"></div>
+            <div ref={(div) => this.fbroot = div}></div>
             <LoginContainer />
             <LogOutContainer />
           </div>

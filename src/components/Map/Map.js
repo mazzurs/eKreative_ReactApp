@@ -1,7 +1,7 @@
-/* global myMap, google */
+/* global myMap, google, Polygon */
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Map, InfoWindow, Marker, GoogleApiWrapper } from 'google-maps-react'
+import { Map, InfoWindow, Marker, GoogleApiWrapper, Polygon } from 'google-maps-react'
 import './Map.css'
 
 class MapContainer extends Component {
@@ -9,6 +9,10 @@ class MapContainer extends Component {
   constructor (props) {
     super(props)
     this.onMarkerClick = this.onMarkerClick.bind(this)
+    this.state = {
+      title: '',
+      description: ''
+    }
   }
 
   onMarkerClick (props, marker, e) {
@@ -19,57 +23,90 @@ class MapContainer extends Component {
     })
   }
 
-  renderMarkers (map, maps) {
-    let marker = new maps.Marker({
-      position: {},
-      map,
-      title: 'Hello World!'
-    })
-  }
-
-  style = {
-    width: '100%',
-    height: '400px'
-  }
-
   mapDidMount () {
 
   }
 
   mapClicked (mapProps, map, clickEvent) {
+    let markers = []
+    markers = this.props.markers
+    markers.push({
+      lat: clickEvent.latLng.lat(),
+      lng: clickEvent.latLng.lng(),
+      title: '',
+      description: ''
+    })
+    this.props.addMarker(markers)
 
+    this.setState(this.state)
+  }
+
+  onChange = (e) => {
+    const state = this.state
+    state[e.target.name] = e.target.value
+    this.setState(state)
+    console.log(this.state)
   }
 
   render () {
-    console.log(this.props)
+    const {title} = this.state.title
+    const {description} = this.state.description
     if (this.props.userToken === '') {
       return ''
     } else {
       return (
-        <Map className='map'
-             google={this.props.google}
-             zoom={13}
-             style={this.style}
-             initialCenter={{
-               lat: 49.444185,
-               lng: 32.059224
-             }}
-             onReady={this.mapDidMount}
-             onClick={this.mapClicked}>
-          <Marker
-            title={'The marker`s title will appear as a tooltip.'}
-            name={'SOMA'}
-            position={{lat: 49.444155,
-              lng: 32.053224}} />
-          <Marker
-            title={'The marker`s title will appear as a tooltip.'}
-            name={'SOMA'}
-            position={{lat: 49.444355,
-              lng: 32.053224}} />
-        </Map>
-      )
+        <div>
+          <Map className='map'
+               google={this.props.google}
+               zoom={13}
+               style={{height: '35%', width: '60%', position: 'static', float: 'left'}}
+               initialCenter={{
+                 lat: 49.444185,
+                 lng: 32.059224
+               }}
+               onReady={this.mapDidMount}
+               onClick={this.mapClicked.bind(this)}>
+
+            {this.props.markers.map((element, index) => {
+              return (<Marker
+                key={index}
+                id={index}
+                title={element.title}
+                name={element.description}
+                position={{lat: element.lat, lng: element.lng}}/>)
+            })}
+          </Map>
+          {this.props.markers.map((element, index) => {
+            return (<div key={index} className="item">
+              <input
+                placeholder="Заголовок:"
+                name="title"
+                onChange={this.onChange}
+                className="input-title"
+                type='text'
+              />
+              <input
+                placeholder="Описание:"
+                name="description"
+                onChange={this.onChange}
+                className="description-title"
+                type='text'
+              />
+            </div>)
+          })}
+        </div>)
     }
   }
+}
+
+MapContainer.propTypes = {
+  changeStateProp: PropTypes.func.isRequired,
+  addMarker: PropTypes.func.isRequired
+}
+
+MapContainer.defaultProps = {
+  changeStateProp: () => {},
+  addMarker: () => {}
 }
 
 export default GoogleApiWrapper({

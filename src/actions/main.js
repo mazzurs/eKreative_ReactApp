@@ -2,6 +2,7 @@ export const INCREMENT = 'INCREMENT'
 export const DECREMENT = 'DECREMENT'
 export const LOGIN = 'LOGIN'
 export const LOGOUT = 'LOGOUT'
+export const ADD_MARKER = 'ADD_MARKER'
 
 export function increment () {
   return dispatch => {
@@ -32,6 +33,15 @@ export function logout () {
   return dispatch => {
     dispatch({
       type: LOGOUT
+    })
+  }
+}
+
+export function addMarker (markers) {
+  return dispatch => {
+    dispatch({
+      type: ADD_MARKER,
+      data: markers
     })
   }
 }

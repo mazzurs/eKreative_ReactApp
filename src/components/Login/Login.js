@@ -17,10 +17,10 @@ class Login extends Component {
     })
   }
   logIn () {
-    FB.login()
-    setTimeout(()=> {
-      this.checkLoginState()
-    },10000)
+    FB.login(this.checkLoginState)
+    // setTimeout(()=> {
+    //   this.checkLoginState()
+    // },10000)
   }
 
   render () {
