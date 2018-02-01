@@ -5,18 +5,46 @@
 
 .input-title {
   position: relative;
+  width: 30%;
 }
 .description-title{
   position: relative;
+  width: 30%;
 }
 
 .item {
-  margin-left: 65%;
   background-color: #222222;
   height: 45px;
-  border-radius: 5px;
+  border-radius: 10px;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
+  position: relative;
+}
+.target{
+  background-color: orangered;
+}
+.delete{
+  position: relative;
+  width: 30%;
+  background-color: orangered;
+}
+.in{
+  position: relative;
+  margin-left: 400px;
+}
+.rc-draggable-list{
+  margin-left: 70%;
+  width: 30%;
+}
+.rc-draggable-list-handles{
+  opacity: 0;
+}
 
+@media only screen and (max-width: 500px){
+    .delete{
+      position: relative;
+      width: 30%;
+      background-color: aqua;
+    }
 }

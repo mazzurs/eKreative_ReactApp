@@ -97,43 +97,43 @@ class App extends Component {
 
           <div>
             <MapContainer />
-            <ul>
-              <li><Link to={`/`}>AppContainer (Home)</Link></li>
-              <li><Link to={`/componentA`}>ComponentAContainer</Link>
-              </li>
-              <li><Link to={`/componentB`}>ComponentBContainer</Link>
-              </li>
-            </ul>
+            {/*<ul>*/}
+              {/*<li><Link to={`/`}>AppContainer (Home)</Link></li>*/}
+              {/*<li><Link to={`/componentA`}>ComponentAContainer</Link>*/}
+              {/*</li>*/}
+              {/*<li><Link to={`/componentB`}>ComponentBContainer</Link>*/}
+              {/*</li>*/}
+            {/*</ul>*/}
           </div>
 
-          <div>
-            <Switch>
-              <Route exact path='/' render={() => {
-                return (
-                  <div>
-                    <h2>Welcome to App</h2>
-                    <p className='App-intro'>
-                      <code>src/components/App.js</code>
-                    </p>
-                    <p>
-                      Value: {this.props.value}
-                    </p>
-                    <p>
-                      <button
-                        onClick={() => this.props.changeStateProp('value', 0, 'main')}>
-                        Reset to "0"
-                      </button>
-                    </p>
-                  </div>
-                )
-              }}/>
-              <Route path='/componentA'
-                     component={ComponentAContainer}/>
-              <Route path='/componentB'
-                     component={ComponentBContainer}/>
-              <Route component={NotFound}/>
-            </Switch>
-          </div>
+          {/*<div>*/}
+            {/*<Switch>*/}
+              {/*<Route exact path='/' render={() => {*/}
+                {/*return (*/}
+                  {/*<div>*/}
+                    {/*<h2>Welcome to App</h2>*/}
+                    {/*<p className='App-intro'>*/}
+                      {/*<code>src/components/App.js</code>*/}
+                    {/*</p>*/}
+                    {/*<p>*/}
+                      {/*Value: {this.props.value}*/}
+                    {/*</p>*/}
+                    {/*<p>*/}
+                      {/*<button*/}
+                        {/*onClick={() => this.props.changeStateProp('value', 0, 'main')}>*/}
+                        {/*Reset to "0"*/}
+                      {/*</button>*/}
+                    {/*</p>*/}
+                  {/*</div>*/}
+                {/*)*/}
+              {/*}}/>*/}
+              {/*<Route path='/componentA'*/}
+                     {/*component={ComponentAContainer}/>*/}
+              {/*<Route path='/componentB'*/}
+                     {/*component={ComponentBContainer}/>*/}
+              {/*<Route component={NotFound}/>*/}
+            {/*</Switch>*/}
+          {/*</div>*/}
         </div>
       </HashRouter>
     )
