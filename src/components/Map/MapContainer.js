@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { changeStateProp } from '../../actions'
-import { addMarker, removeMarker, editMarker, editLat, editLng, replaceMarkers } from '../../actions/main'
+import { addMarker, removeMarker, editMarker, editLat, editLng, replaceMarkers, reMarkers, reTitle, updateMarkers } from '../../actions/main'
 import Map from './Map'
 
 const mapStateToProps = ({main: {userToken, markers}}, ownProps) => {
@@ -15,7 +15,7 @@ const mapStateToProps = ({main: {userToken, markers}}, ownProps) => {
 const mapDispatchToProps = (dispatch) => {
   return {
 
-    ...bindActionCreators({changeStateProp, addMarker, removeMarker, editMarker, editLat, editLng, replaceMarkers}, dispatch),
+    ...bindActionCreators({changeStateProp, addMarker, removeMarker, editMarker, editLat, editLng, replaceMarkers, reMarkers, reTitle, updateMarkers}, dispatch),
 
     changeStateProp: function (prop, value, reducer) {
 
@@ -50,6 +50,21 @@ const mapDispatchToProps = (dispatch) => {
 
     replaceMarkers: function (oldIndex, newIndex, oldMarker, newMarker) {
       replaceMarkers(oldIndex, newIndex, oldMarker, newMarker)(dispatch)
+      return null
+    },
+
+    reMarkers: function (newState) {
+      reMarkers(newState)(dispatch)
+      return null
+    },
+
+    reTitle: function (newTitle, idTitle) {
+      reTitle(newTitle, idTitle)(dispatch)
+      return null
+    },
+
+    updateMarkers: function (oldIndex, newIndex, markers) {
+      updateMarkers(oldIndex, newIndex, markers)(dispatch)
       return null
     }
   }

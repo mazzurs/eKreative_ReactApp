@@ -11,9 +11,9 @@ import {
   REMOVE_MARKER,
   EDIT_MARKER,
   EDIT_LAT,
-  EDIT_LNG
+  EDIT_LNG,
+  UPDATE_MARKERS
 } from '../actions/main'
-import { REPLACE_MARKERS } from '../actions/main'
 
 const REDUCER = 'MAIN'
 const defaultState = {
@@ -65,14 +65,29 @@ export default (state = defaultState, action) => {
     case EDIT_LNG:
       let {lng, idMarker} = action.data
       return update(state, {markers: {[idMarker]: {'lng': {$set: lng}}}})
-    case REPLACE_MARKERS:
-      let {oldIndex, newIndex, oldMarker, newMarker} = action.data
-      return update(state, {markers: {[oldIndex]: {$set: newMarker}, [newIndex]: {$set: oldMarker}}})
+    // case RE_MARKERS:
+    //   console.log(action.data.newState)
+    //   return {
+    //     ...state,
+    //     markers: action.data.newState
+    //   }
+
+    // case RE_TITLE:
+    //   let {newTitle, idTitle} = action.data
+    //   return update(state, {markers: {[idTitle]: {'title': {$set: newTitle}}}})
 
     case REDUCER + CHANGE_STATE_PROP:
       return update(state, {
         [action.state.prop]: {$set: action.state.value}
       })
+
+    case UPDATE_MARKERS:
+      const {oldIndex, newIndex, markers} = action.data
+      const clone = markers.slice(0)
+      const tmp = clone[oldIndex]
+      clone.splice([oldIndex], 1)
+      clone.splice([newIndex], 0, tmp)
+      return update(state, {markers: {$set: clone}})
     default:
       return state
   }

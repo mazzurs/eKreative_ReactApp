@@ -8,6 +8,9 @@ export const EDIT_MARKER = 'EDIT_MARKER'
 export const EDIT_LAT = 'EDIT_LAT'
 export const EDIT_LNG = 'EDIT_LNG'
 export const REPLACE_MARKERS = 'REPLACE_MARKERS'
+export const RE_MARKERS = 'RE_MARKERS'
+export const RE_TITLE = 'RE_TITLE'
+export const UPDATE_MARKERS = 'UPDATE_MARKERS'
 
 export function increment () {
   return dispatch => {
@@ -92,6 +95,33 @@ export function replaceMarkers (oldIndex, newIndex, oldMarker, newMarker) {
     dispatch({
       type: REPLACE_MARKERS,
       data: {oldIndex, newIndex, oldMarker, newMarker}
+    })
+  }
+}
+
+export function reMarkers (newState) {
+  return dispatch => {
+    dispatch({
+      type: RE_MARKERS,
+      data: {newState}
+    })
+  }
+}
+
+export function reTitle (newTitle, idTitle) {
+  return dispatch => {
+    dispatch({
+      type: RE_TITLE,
+      data: {newTitle, idTitle}
+    })
+  }
+}
+
+export function updateMarkers (oldIndex, newIndex, markers) {
+  return dispatch => {
+    dispatch({
+      type: UPDATE_MARKERS,
+      data: {oldIndex, newIndex, markers}
     })
   }
 }
