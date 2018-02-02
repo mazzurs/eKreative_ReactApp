@@ -41,6 +41,10 @@
   opacity: 0;
 }
 
+.drag-item{
+  opacity: 1;
+}
+
 @media only screen and (max-width: 500px){
     .delete{
       position: relative;

@@ -1,9 +1,10 @@
-/* global myMap, google, Polygon */
+/* global myMap, google, Polygon, SortableItem, SortableList */
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Map, InfoWindow, Marker, GoogleApiWrapper, Polygon } from 'google-maps-react'
 import './Map.css'
-var ReactDragList = require('react-drag-list');
+
+var ReactDragList = require('react-drag-list')
 
 class MapContainer extends Component {
 
@@ -13,7 +14,8 @@ class MapContainer extends Component {
     this.remove = this.remove.bind(this)
     this.state = {
       title: '',
-      description: ''
+      description: '',
+      markers: []
     }
   }
 
@@ -74,8 +76,25 @@ class MapContainer extends Component {
   }
 
   onListUpdate (event) {
+    // let list = document.getElementsByClassName('rc-draggable-list');
+    // let items = list[0].children[0].children
+    // let newState = []
+    //
+    // for (let i=0; i< this.props.markers.length; i++){
+    //   newState[i] = {lat: this.props.markers[i].lat, lng: this.props.markers[i].lng, title: items[i].children[1].children[0].value, description: items[i].children[1].children[1].value}
+    // }
+    // newState
+
     this.props.replaceMarkers(event.oldIndex, event.newIndex, this.props.markers[event.oldIndex], this.props.markers[event.newIndex])
     this.setState(this.state)
+
+
+
+    // for (let i=0; i< this.props.markers.length; i++){
+    //   items[i].children[1].children[0].value = this.props.markers[i].title
+    //   items[i].children[1].children[1].value = this.props.markers[i].description
+    // }
+
   }
 
   render () {
@@ -108,32 +127,33 @@ class MapContainer extends Component {
                 draggable/>)
             })}
           </Map>
+            <ReactDragList
+              dragClass='drag-item'
+              onUpdate={this.onListUpdate.bind(this)}
+              dataSource={this.props.markers}
+              row={(record, index) => <div id={index} className="item">
 
-          <ReactDragList
-            onUpdate={this.onListUpdate.bind(this)}
-            dataSource={this.props.markers}
-            row={(record, index) => <div id={index} className="item">
+                <input
+                  value={this.props.markers[index].title}
+                  placeholder="Заголовок:"
+                  name="title"
+                  onChange={(e) => {this.onChange(e, name, index)}}
+                  className="input-title"
+                  type='text'
+                />
+                <input
+                  value={this.props.markers[index].description}
+                  placeholder="Описание:"
+                  name="description"
+                  onChange={(e) => {this.onChange(e, name, index)}}
+                  className="description-title"
+                  type='text'
+                />
+                <input onClick={this.remove.bind(this)} type="button" className="delete" value="Удалить"></input>
 
-              <input
-                value={this.props.markers[index].title}
-                placeholder="Заголовок:"
-                name="title"
-                onChange={(e)=>{this.onChange(e, name, index)}}
-                className="input-title"
-                type='text'
-              />
-              <input
-                value={this.props.markers[index].description}
-                placeholder="Описание:"
-                name="description"
-                onChange={(e)=>{this.onChange(e, name, index)}}
-                className="description-title"
-                type='text'
-              />
-              <input onClick={this.remove.bind(this)} type="button" className="delete" value="Удалить"></input>
+              </div>}
+            />
 
-            </div>}
-          />
         </div>)
     }
   }
